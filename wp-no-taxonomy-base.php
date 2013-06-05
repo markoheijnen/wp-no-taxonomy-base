@@ -37,7 +37,7 @@ class WP_No_Taxonomy_Base {
 
     add_filter('category_rewrite_rules' , array($this , 'add_rules'   )  ) ;
 
-
+    add_filter('term_link'              , array($this , 'correct_term_link' ), 10, 3 ) ;
   }
 
   public function flush_rules() {
@@ -132,6 +132,21 @@ class WP_No_Taxonomy_Base {
     return $rules;
 
   }
+
+
+  public function correct_term_link( $link, $feed, $taxonomy ) {
+    $taxonomies = get_option('WP_No_Taxonomy_Base');
+
+    /** Bail */
+    if( ! $taxonomies )
+      return false;
+
+    if( in_array( $taxonomy, $taxonomies ) )
+      $link = str_replace( $taxonomy . '/', '', $link );
+
+    return $link;
+  }
+
 
   public function add_page() {
 
