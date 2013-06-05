@@ -1,14 +1,15 @@
 <?php
 /*
 Plugin Name: WP No Taxonomy Base
-Plugin URI: http://projectsbydavid.com/wp-no-taxonomy-base-plugin/
+Plugin URI: http://markoheijnen.com
 Description: Remove base slug from your custom taxonomy terms.
-Author: <a href="http://twitter.com/luk3thomas">@luk3thomas</a> & <a href="http://twitter.com/DavidDiGiovanni">@DavidDiGiovanni</a>
-Version: 1.0
+Version: 1.1
+Author: Marko Heijnen
+Author URI: http://markoheijnen.com
 */
 
 /*
-    Copyright 2012 Luke Thomas (email: luk3thomas at gmail.com)
+    Copyright 2013 Marko Heijnen
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
