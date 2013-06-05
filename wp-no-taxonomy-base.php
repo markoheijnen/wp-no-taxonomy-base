@@ -76,6 +76,7 @@ class WP_No_Taxonomy_Base {
         wp_redirect($new_url, 301);
 
         $redirect = true;
+        die();
 
       }
 
