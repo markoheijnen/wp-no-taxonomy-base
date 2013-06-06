@@ -166,7 +166,7 @@ class WP_No_Taxonomy_Base {
 
     if(isset($_POST['vesave']) && $_POST['vesave'] == 'save') {
 
-      update_option( 'WP_No_Taxonomy_Base', $_POST['WP_No_Taxonomy_Base'] );
+      update_option( 'WP_No_Taxonomy_Base', ( isset($_POST['WP_No_Taxonomy_Base']) ) ? $_POST['WP_No_Taxonomy_Base'] : false );
 
       $this->flush_rules();
 
