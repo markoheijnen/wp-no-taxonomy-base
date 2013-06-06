@@ -164,9 +164,9 @@ class WP_No_Taxonomy_Base {
     if(!current_user_can('manage_options'))
       wp_die( __('You do not have sufficient permissions to access this page.') );
 
-    if($_POST['vesave'] == 'save') {
+    if(isset($_POST['vesave']) && $_POST['vesave'] == 'save') {
 
-      update_option( 'WP_No_Taxonomy_Base', $_POST['WP_No_Taxonomy_Base'] );
+      update_option( 'WP_No_Taxonomy_Base', ( isset($_POST['WP_No_Taxonomy_Base']) ) ? $_POST['WP_No_Taxonomy_Base'] : false );
 
       $this->flush_rules();
 
