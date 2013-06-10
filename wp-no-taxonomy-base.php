@@ -46,8 +46,6 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 				add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 				add_filter( 'template_redirect', array( $this, 'redirect' ) );
 
-				add_action( 'admin_menu', array( $this, 'add_page' ) );
-
 				add_action( 'created_category', array( $this, 'flush_rules' ) );
 				add_action( 'delete_category', array( $this, 'flush_rules' ) );
 				add_action( 'edited_category', array( $this, 'flush_rules' ) );
@@ -145,10 +143,6 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 				return $link;
 			}
 
-
-			public function add_page() {
-				add_submenu_page( 'options-general.php', __( 'WP No Taxonomy Base', 'wp-no-taxonomy-base' ), __( 'WP No Taxonomy Base', 'wp-no-taxonomy-base' ), 'manage_options', 'wp-no-taxonomy-base', array( $this, 'show_page' ) );
-			}
 
 			public function show_page() {
 				 /** @todo make frontend look better */
