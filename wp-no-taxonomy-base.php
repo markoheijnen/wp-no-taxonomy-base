@@ -150,12 +150,10 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 			public function correct_term_link( $link, $feed, $taxonomy ) {
 				$taxonomies = get_option('WP_No_Taxonomy_Base');
 
-				/** Bail */
-				if( ! $taxonomies )
-					return false;
-
-				if( in_array( $taxonomy, $taxonomies ) )
-					$link = str_replace( $taxonomy . '/', '', $link );
+				if( $taxonomies ) {
+					if( in_array( $taxonomy, $taxonomies ) )
+						$link = str_replace( $taxonomy . '/', '', $link );
+				}
 
 				return $link;
 			}
