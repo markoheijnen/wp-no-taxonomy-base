@@ -45,11 +45,12 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 			public function __construct() {
 				add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 
-				add_action( 'admin_menu', array( $this, 'add_page' )  );
+				add_action( 'init', array( $this, 'redirect' ) );
+				add_action( 'admin_menu', array( $this, 'add_page' ) );
+
 				add_action( 'created_category', array( $this, 'flush_rules' ) );
 				add_action( 'delete_category', array( $this, 'flush_rules' ) );
 				add_action( 'edited_category', array( $this, 'flush_rules' ) );
-				add_action( 'init', array( $this, 'redirect' ) );
 
 				add_filter( 'category_rewrite_rules', array( $this, 'add_rules' ) );
 
