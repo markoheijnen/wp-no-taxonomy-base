@@ -44,8 +44,8 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 
 			public function __construct() {
 				add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
+				add_filter( 'template_redirect', array( $this, 'redirect' ) );
 
-				add_action( 'init', array( $this, 'redirect' ) );
 				add_action( 'admin_menu', array( $this, 'add_page' ) );
 
 				add_action( 'created_category', array( $this, 'flush_rules' ) );
@@ -68,40 +68,27 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 			}
 
 			public function redirect() {
-				$request    = $_SERVER['REQUEST_URI'];
-				$host       = $_SERVER['HTTP_HOST'];
-				$redirect   = false;
-				$blogurl    = get_bloginfo('url');
-				$taxonomies = get_option('WP_No_Taxonomy_Base');
-				$http       = ( strrpos( $blogurl, 'https://' ) === false ) ? 'http://' : 'https://';
+				global $wp, $wp_query;
 
-				/** Bail */
-				if( ! $taxonomies )
-					return false;
+				if( is_category() || is_tag() || is_tax() ) {
+					$taxonomies = get_option('WP_No_Taxonomy_Base');
+					$taxonomy   = get_queried_object()->taxonomy;
 
-				/** build the URL */
-				$url = $http . $host . $request;
+					/** Bail */
+					if( ! $taxonomies )
+						return false;
 
-				foreach( $taxonomies as $term ) {
+					if( in_array( $taxonomy, $taxonomies ) ) {
+						$url = home_url( $wp->request );
 
-					/**
-					 * If the url contains a taxonomy term base
-					 * then redirect it to the new page.
-					 * Only redirect one time.
-					 * -------------------------------------------- */
-					if( strrpos( $url, '/' . $term . '/' ) && ! $redirect ) {
+						if( strrpos( $url, '/' . $taxonomy . '/' ) ) {
+							$new_url = str_replace( '/' . $taxonomy . '/', '/', $url );
 
-						$new_url = str_replace( '/' . $term . '/', '/', $url );
-
-						wp_redirect( $new_url, 301 );
-
-						$redirect = true;
-						die();
-
+							wp_redirect( $new_url, 301 );
+							die();
+						}
 					}
-
 				}
-
 			}
 
 			public function add_rules( $rules ) {
