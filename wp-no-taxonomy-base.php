@@ -49,7 +49,7 @@ class WP_No_Taxonomy_Base {
   }
   
   public function textdomain() {
-      load_plugin_textdomain( 'wp-no-taxonomy-base', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+    load_plugin_textdomain( 'wp-no-taxonomy-base', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
   }
 
   public function flush_rules() {
@@ -162,7 +162,7 @@ class WP_No_Taxonomy_Base {
 
   public function add_page() {
 
-    add_submenu_page('options-general.php', 'WP No Taxonomy Base', 'WP No Taxonomy Base', 'manage_options', 'wp-no-taxonomy-base', array($this, 'show_page'));
+    add_submenu_page('options-general.php', __('WP No Taxonomy Base', 'wp-no-taxonomy-base'), __('WP No Taxonomy Base', 'wp-no-taxonomy-base'), 'manage_options', 'wp-no-taxonomy-base', array($this, 'show_page'));
 
   }
 
@@ -192,9 +192,9 @@ class WP_No_Taxonomy_Base {
  ?>
   <div class="wrap">
 
-    <h1>WP No Taxonomy Base</h1>
+    <h1><?php _e('WP No Taxonomy Base', 'wp-no-taxonomy-base'); ?></h1>
 
-    <p>Want to remove the base for a taxonomy? Just select the taxonomy below and click "Save".</p>
+    <p><?php sprint( __('Want to remove the base for a taxonomy? Just select the taxonomy below and click "%s".', 'wp-no-taxonomy-base'), __('Save') ); ?></p>
 
     <form method="post">
 
@@ -226,7 +226,7 @@ class WP_No_Taxonomy_Base {
 
       </table>
 
-      <button class="button-primary">Save</button>
+      <button class="button-primary"><?php _e('Save'); ?></button>
 
     </form>
 
