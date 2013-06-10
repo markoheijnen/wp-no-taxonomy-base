@@ -176,7 +176,7 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 
 				<h1><?php _e('WP No Taxonomy Base', 'wp-no-taxonomy-base'); ?></h1>
 
-				<p><?php sprintf( __('Want to remove the base for a taxonomy? Just select the taxonomy below and click "%s".', 'wp-no-taxonomy-base'), __('Save') ); ?></p>
+				<p><?php _e('Want to remove the base for a taxonomy? Just select the taxonomy below and click "Save".', 'wp-no-taxonomy-base'); ?></p>
 
 				<form method="post">
 					<?php wp_nonce_field( 'wp-no-taxonomy-base-update-taxonomies', 'wp-no-taxonomy-base-nonce' ); ?>
