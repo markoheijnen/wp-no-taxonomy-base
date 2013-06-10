@@ -200,12 +200,13 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 					<?php
 						foreach( $taxonomies as $taxonomy ) {
 							$active = in_array( $taxonomy->name, $selected ) ? 'checked="checked"' : '';
+							$id     = esc_attr( 'wp-no-taxonomy-base-' . $taxonomy->name );
 
 							printf(
 							'
 								<tr>
-									<td> <label>%s</label> </td>
-									<td> <input type="checkbox" name="WP_No_Taxonomy_Base[]" value="%s" %s /> </td>
+									<td><label for="' . $id . '">%s</label></td>
+									<td><input type="checkbox" id="' . $id . '" name="WP_No_Taxonomy_Base[]" value="%s" %s /></td>
 								</tr>
 							'
 							, $taxonomy->label
