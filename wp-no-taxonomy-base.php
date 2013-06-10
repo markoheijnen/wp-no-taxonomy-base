@@ -45,6 +45,8 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 			public function __construct() {
 				add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 				add_filter( 'template_redirect', array( $this, 'redirect' ) );
+                
+                add_action('admin_init', array( $this, 'settings_init') );
 
 				add_action( 'created_category', array( $this, 'flush_rules' ) );
 				add_action( 'delete_category', array( $this, 'flush_rules' ) );
@@ -142,9 +144,38 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 
 				return $link;
 			}
+            
+            
+            function settings_init(){
+                register_setting(
+                    'permalink', // settings page
+                    'WP_No_Taxonomy_Base' // option name
+                    // array( $this, '') // validation callback
+                );
+                
+                add_settings_section( 
+                    'wp-no-taxonomy-base-settings', 
+                    __('WP No Taxonomy Base', 'wp-no-taxonomy-base'), 
+                    array( $this, 'show_description'), 
+                    'permalink'
+                );
+
+                add_settings_field(
+                    'wp-no-taxonomy-base-settings-taxonomies', // id
+                    __('Taxonomies'), // setting title
+                    array( $this, 'show_page'), // display callback
+                    'permalink', // settings page
+                    'wp-no-taxonomy-base-settings' // settings section
+                );
+            }
 
 
-			public function show_page() {
+			public function show_description() {
+                echo '<p>' . sprintf( __('Want to remove the base for a taxonomy? Just select the taxonomy below and click "%s".', 'wp-no-taxonomy-base'), __('Save Changes') ) . '</p>';
+            }
+            
+            
+            public function show_page() {
 				 /** @todo make frontend look better */
 				 /** @todo UX - notifications after an update */
 
@@ -166,13 +197,8 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 					$selected = array();
 
 		 ?>
-			<div class="wrap">
 
-				<h1><?php _e('WP No Taxonomy Base', 'wp-no-taxonomy-base'); ?></h1>
-
-				<p><?php _e('Want to remove the base for a taxonomy? Just select the taxonomy below and click "Save".', 'wp-no-taxonomy-base'); ?></p>
-
-				<form method="post">
+                <form method="post">
 					<?php wp_nonce_field( 'wp-no-taxonomy-base-update-taxonomies', 'wp-no-taxonomy-base-nonce' ); ?>
 					<input type="hidden" name="vesave" value="save" />
 
@@ -196,11 +222,7 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 					?>
 					</table>
 
-					<button class="button-primary"><?php _e('Save'); ?></button>
-
 				</form>
-
-			</div>
 
 			<?php
 
