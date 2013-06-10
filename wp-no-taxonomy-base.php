@@ -43,6 +43,13 @@ class WP_No_Taxonomy_Base {
     add_filter('category_rewrite_rules' , array($this , 'add_rules'   )  ) ;
 
     add_filter('term_link'              , array($this , 'correct_term_link' ), 10, 3 ) ;
+    
+    // load textdomain - to move?
+    $this->textdomain;
+  }
+  
+  public function textdomain() {
+      load_plugin_textdomain( 'wp-no-taxonomy-base', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
   }
 
   public function flush_rules() {
