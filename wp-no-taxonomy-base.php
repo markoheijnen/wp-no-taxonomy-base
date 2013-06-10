@@ -46,7 +46,7 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 				add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 				add_filter( 'template_redirect', array( $this, 'redirect' ) );
                 
-                add_action('admin_init', array( $this, 'settings_init') );
+                add_action( 'admin_init', array( $this, 'settings_init' ) );
 
 				add_action( 'created_category', array( $this, 'flush_rules' ) );
 				add_action( 'delete_category', array( $this, 'flush_rules' ) );
@@ -176,9 +176,6 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
             
             
             public function show_page() {
-				 /** @todo make frontend look better */
-				 /** @todo UX - notifications after an update */
-
 				if( ! current_user_can('manage_options') )
 					wp_die( __('You do not have sufficient permissions to access this page.') );
 
@@ -195,10 +192,7 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 
 				if( ! $selected )
 					$selected = array();
-
-		 ?>
-
-                <form method="post">
+				?>
 					<?php wp_nonce_field( 'wp-no-taxonomy-base-update-taxonomies', 'wp-no-taxonomy-base-nonce' ); ?>
 					<input type="hidden" name="vesave" value="save" />
 
@@ -221,8 +215,6 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 						}
 					?>
 					</table>
-
-				</form>
 
 			<?php
 
