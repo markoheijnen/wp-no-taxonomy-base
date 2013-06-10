@@ -165,7 +165,7 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 					}
 				}
 
-				$taxonomies = get_taxonomies( array('public' => true) ); 
+				$taxonomies = get_taxonomies( array( 'public' => true ), 'objects' ); 
 				$selected   = get_option('WP_No_Taxonomy_Base');
 
 				if( ! $selected )
@@ -180,14 +180,12 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 
 				<form method="post">
 					<?php wp_nonce_field( 'wp-no-taxonomy-base-update-taxonomies', 'wp-no-taxonomy-base-nonce' ); ?>
-
 					<input type="hidden" name="vesave" value="save" />
 
 					<table>
-
 					<?php
 						foreach( $taxonomies as $taxonomy ) {
-							$active = in_array($taxonomy, $selected) ? 'checked="checked"' : '';
+							$active = in_array( $taxonomy->name, $selected ) ? 'checked="checked"' : '';
 
 							printf(
 							'
@@ -196,13 +194,12 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 									<td> <input type="checkbox" name="WP_No_Taxonomy_Base[]" value="%s" %s /> </td>
 								</tr>
 							'
-							, $taxonomy
-							, $taxonomy
+							, $taxonomy->label
+							, $taxonomy->name
 							, $active
 							);
 						}
 					?>
-
 					</table>
 
 					<button class="button-primary"><?php _e('Save'); ?></button>
