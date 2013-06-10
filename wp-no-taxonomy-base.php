@@ -43,22 +43,20 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 		class WP_No_Taxonomy_Base {
 
 			public function __construct() {
+				add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 
-				add_action('admin_menu'             , array($this , 'add_page'    )  ) ;
-				add_action('created_category'       , array($this , 'flush_rules' )  ) ;
-				add_action('delete_category'        , array($this , 'flush_rules' )  ) ;
-				add_action('edited_category'        , array($this , 'flush_rules' )  ) ;
-				add_action('init'                   , array($this , 'redirect'    )  ) ;
+				add_action( 'admin_menu', array( $this, 'add_page' )  );
+				add_action( 'created_category', array( $this, 'flush_rules' ) );
+				add_action( 'delete_category', array( $this, 'flush_rules' ) );
+				add_action( 'edited_category', array( $this, 'flush_rules' ) );
+				add_action( 'init', array( $this, 'redirect' ) );
 
-				add_filter('category_rewrite_rules' , array($this , 'add_rules'   )  ) ;
+				add_filter( 'category_rewrite_rules', array( $this, 'add_rules' ) );
 
-				add_filter('term_link'              , array($this , 'correct_term_link' ), 10, 3 ) ;
-
-				// load textdomain - to move?
-				$this->textdomain;
+				add_filter( 'term_link', array( $this, 'correct_term_link' ), 10, 3 );
 			}
 
-			public function textdomain() {
+			public function load_textdomain() {
 				load_plugin_textdomain( 'wp-no-taxonomy-base', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 			}
 
