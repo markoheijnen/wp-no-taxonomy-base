@@ -1,5 +1,5 @@
 === WP No Taxonomy Base ===
-Contributors: Marko Heijnen, Luke Thomas, David DiGiovanni
+Contributors: Marko Heijnen, Christian Föllmann, Jaime Martinez, Luke Thomas, David DiGiovanni
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CQFB8UMDTEGGG
 Tags: taxonomy, custom taxonomy
 Requires at least: 3.3
@@ -32,6 +32,13 @@ This plugin was developed by Luke Thomas (http://twitter.com/luk3thomas) and sub
 = 1.1 ( 2013-6-5 ) =
 * Fix not working redirect
 * Always show correct link to the terms
+* Fix notices (Thanks to Jaime Martinez)
+* Made plugin translatable (Thanks to Christian Föllmann)
+* No direct access to the file (Thanks to Christian Föllmann)
+* Add nonce to the settings page
+* Cleanup redirect logic to the new urls
+* Use the taxonomy labels instead of their names on the settings page
+* Cleanup the code even more
 
 = 1.0 ( 2012-8-29 ) =
 * First release by Luke Thomas and David DiGiovanni
