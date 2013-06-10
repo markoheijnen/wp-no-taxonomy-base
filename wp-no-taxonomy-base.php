@@ -171,7 +171,7 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 
 
 			public function show_description() {
-                echo '<p>' . sprintf( __('Want to remove the base for a taxonomy? Just select the taxonomy below and click "%s".', 'wp-no-taxonomy-base'), __('Save Changes') ) . '</p>';
+                echo '<p>' . sprintf( __('Want to remove the base for a taxonomy? Just select the taxonomy below and click %s.', 'wp-no-taxonomy-base'), '"<b>' . __('Save Changes') . '</b>"') . '</p>';
             }
             
             
