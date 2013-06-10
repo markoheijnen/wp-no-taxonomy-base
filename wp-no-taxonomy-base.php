@@ -73,10 +73,10 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 				$redirect   = false;
 				$blogurl    = get_bloginfo('url');
 				$taxonomies = get_option('WP_No_Taxonomy_Base');
-				$http       = ( strrpos($blogurl, 'https://') === false ) ? 'http://' : 'https://';
+				$http       = ( strrpos( $blogurl, 'https://' ) === false ) ? 'http://' : 'https://';
 
 				/** Bail */
-				if(!$taxonomies)
+				if( ! $taxonomies )
 					return false;
 
 				/** build the URL */
@@ -89,11 +89,11 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 					 * then redirect it to the new page.
 					 * Only redirect one time.
 					 * -------------------------------------------- */
-					if( strrpos($url, '/' . $term . '/') && !$redirect) {
+					if( strrpos( $url, '/' . $term . '/' ) && ! $redirect ) {
 
-						$new_url = str_replace('/' . $term . '/', '/', $url);
+						$new_url = str_replace( '/' . $term . '/', '/', $url );
 
-						wp_redirect($new_url, 301);
+						wp_redirect( $new_url, 301 );
 
 						$redirect = true;
 						die();
@@ -104,8 +104,7 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 
 			}
 
-			public function add_rules($rules) {
-
+			public function add_rules( $rules ) {
 				/**
 				 * @todo 
 				 *
@@ -120,37 +119,31 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 				$taxonomies = get_option('WP_No_Taxonomy_Base');
 
 				/** Time to bail. */
-				if(!$taxonomies)
+				if( ! $taxonomies )
 					return $rules;
 
-
-				$args  = array('hide_empty' => false);
+				$args  = array( 'hide_empty' => false );
 
 				/**
 				 * Loop em.
 				 * -------------------------------------------- */
 				foreach( $taxonomies as $taxonomy ) {
+					$categories = get_terms( $taxonomy, $args );
 
-					$categories = get_terms($taxonomy, $args);
-
-					foreach($categories as $category) {
-
+					foreach( $categories as $category ) {
 						$slug = $category->slug;
 
-						$feed_rule  = sprintf('index.php?taxonomy=%s&term=%s&feed=$matches[1]'  , $taxonomy , $slug);
-						$paged_rule = sprintf('index.php?taxonomy=%s&term=%s&paged=$matches[1]' , $taxonomy , $slug);
-						$base_rule  = sprintf('index.php?taxonomy=%s&term=%s'                   , $taxonomy , $slug);
+						$feed_rule  = sprintf( 'index.php?taxonomy=%s&term=%s&feed=$matches[1]'  , $taxonomy , $slug );
+						$paged_rule = sprintf( 'index.php?taxonomy=%s&term=%s&paged=$matches[1]' , $taxonomy , $slug );
+						$base_rule  = sprintf( 'index.php?taxonomy=%s&term=%s'                   , $taxonomy , $slug );
 
-						$rules[$slug . '/(?:feed/)?(feed|rdf|rss|rss2|atom)/?$'] = $feed_rule;
-						$rules[$slug . '/page/?([0-9]{1,})/?$']                  = $paged_rule;
-						$rules[$slug . '/?$']                                    = $base_rule;
-
+						$rules[ $slug . '/(?:feed/)?(feed|rdf|rss|rss2|atom)/?$' ] = $feed_rule;
+						$rules[ $slug . '/page/?([0-9]{1,})/?$' ]                  = $paged_rule;
+						$rules[ $slug . '/?$' ]                                    = $base_rule;
 					}
-
 				}
 
 				return $rules;
-
 			}
 
 
@@ -169,32 +162,27 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 
 
 			public function add_page() {
-
-				add_submenu_page('options-general.php', __('WP No Taxonomy Base', 'wp-no-taxonomy-base'), __('WP No Taxonomy Base', 'wp-no-taxonomy-base'), 'manage_options', 'wp-no-taxonomy-base', array($this, 'show_page'));
-
+				add_submenu_page( 'options-general.php', __( 'WP No Taxonomy Base', 'wp-no-taxonomy-base' ), __( 'WP No Taxonomy Base', 'wp-no-taxonomy-base' ), 'manage_options', 'wp-no-taxonomy-base', array( $this, 'show_page' ) );
 			}
 
 			public function show_page() {
-
 				 /** @todo internationalization */
 				 /** @todo make frontend look better */
 				 /** @todo UX - notifications after an update */
 
-				if(!current_user_can('manage_options'))
+				if( ! current_user_can('manage_options') )
 					wp_die( __('You do not have sufficient permissions to access this page.') );
 
-				if(isset($_POST['vesave']) && $_POST['vesave'] == 'save') {
-
+				if( isset( $_POST['vesave'] ) && $_POST['vesave'] == 'save' ) {
 					update_option( 'WP_No_Taxonomy_Base', ( isset($_POST['WP_No_Taxonomy_Base']) ) ? $_POST['WP_No_Taxonomy_Base'] : false );
 
 					$this->flush_rules();
-
 				}
 
 				$taxonomies = get_taxonomies( array('public' => true) ); 
-				$selected = get_option('WP_No_Taxonomy_Base');
+				$selected   = get_option('WP_No_Taxonomy_Base');
 
-				if(!$selected)
+				if( ! $selected )
 					$selected = array();
 
 		 ?>
@@ -210,10 +198,8 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 
 					<table>
 
-					<?php 
-
+					<?php
 						foreach( $taxonomies as $taxonomy ) {
-
 							$active = in_array($taxonomy, $selected) ? 'checked="checked"' : '';
 
 							printf(
@@ -227,9 +213,7 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 							, $taxonomy
 							, $active
 							);
-
 						}
-
 					?>
 
 					</table>
