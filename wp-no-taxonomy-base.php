@@ -246,6 +246,6 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 
 		} // END class WP_No_Taxonomy_Base
 
-		$no_base = new WP_No_Taxonomy_Base();
+		$wp_no_taxonomy_base = new WP_No_Taxonomy_Base();
 
 } // END if class_exists
