@@ -30,6 +30,14 @@ Domain Path: /languages
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+//avoid direct calls to this file, because now WP core and framework has been used
+//implementation by Frank Bültge (https://github.com/bueltge)
+if ( ! function_exists( 'add_filter' ) ) {
+    header('Status: 403 Forbidden');
+    header('HTTP/1.1 403 Forbidden');
+    exit();
+}
+
 if ( !class_exists('WP_No_Taxonomy_Base') ) {
     
     class WP_No_Taxonomy_Base {
@@ -196,7 +204,7 @@ if ( !class_exists('WP_No_Taxonomy_Base') ) {
 
         <h1><?php _e('WP No Taxonomy Base', 'wp-no-taxonomy-base'); ?></h1>
 
-        <p><?php sprint( __('Want to remove the base for a taxonomy? Just select the taxonomy below and click "%s".', 'wp-no-taxonomy-base'), __('Save') ); ?></p>
+        <p><?php sprintf( __('Want to remove the base for a taxonomy? Just select the taxonomy below and click "%s".', 'wp-no-taxonomy-base'), __('Save') ); ?></p>
 
         <form method="post">
 
