@@ -1,5 +1,5 @@
 === WP No Taxonomy Base ===
-Contributors: Marko Heijnen, Christian Föllmann, Jaime Martinez, Luke Thomas, David DiGiovanni
+Contributors: Marko Heijnen, Christian Foellmann, Jaime Martinez, Luke Thomas, David DiGiovanni
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CQFB8UMDTEGGG
 Tags: taxonomy, custom taxonomy
 Requires at least: 3.3
