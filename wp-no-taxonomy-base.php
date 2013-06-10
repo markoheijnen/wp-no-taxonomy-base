@@ -174,9 +174,11 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 					wp_die( __('You do not have sufficient permissions to access this page.') );
 
 				if( isset( $_POST['vesave'] ) && $_POST['vesave'] == 'save' ) {
-					update_option( 'WP_No_Taxonomy_Base', ( isset($_POST['WP_No_Taxonomy_Base']) ) ? $_POST['WP_No_Taxonomy_Base'] : false );
+					if( isset( $_POST['wp-no-taxonomy-base-nonce'] ) && wp_verify_nonce( $_POST['wp-no-taxonomy-base-nonce'], 'wp-no-taxonomy-base-update-taxonomies' ) ) {
+						update_option( 'WP_No_Taxonomy_Base', ( isset( $_POST['WP_No_Taxonomy_Base'] ) ) ? $_POST['WP_No_Taxonomy_Base'] : false );
 
-					$this->flush_rules();
+						$this->flush_rules();
+					}
 				}
 
 				$taxonomies = get_taxonomies( array('public' => true) ); 
@@ -193,6 +195,7 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 				<p><?php sprintf( __('Want to remove the base for a taxonomy? Just select the taxonomy below and click "%s".', 'wp-no-taxonomy-base'), __('Save') ); ?></p>
 
 				<form method="post">
+					<?php wp_nonce_field( 'wp-no-taxonomy-base-update-taxonomies', 'wp-no-taxonomy-base-nonce' ); ?>
 
 					<input type="hidden" name="vesave" value="save" />
 
