@@ -30,6 +30,14 @@ Domain Path: /languages
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+//avoid direct calls to this file, because now WP core and framework has been used
+//implementation by Frank Bültge (https://github.com/bueltge)
+if ( ! function_exists( 'add_filter' ) ) {
+    header('Status: 403 Forbidden');
+    header('HTTP/1.1 403 Forbidden');
+    exit();
+}
+
 if ( !class_exists('WP_No_Taxonomy_Base') ) {
     
     class WP_No_Taxonomy_Base {
