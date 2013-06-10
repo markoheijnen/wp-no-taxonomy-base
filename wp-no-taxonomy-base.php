@@ -62,10 +62,9 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 			}
 
 			public function flush_rules() {
-
 				global $wp_rewrite;
-				$wp_rewrite->flush_rules();
 
+				$wp_rewrite->flush_rules();
 			}
 
 			public function redirect() {
