@@ -6,6 +6,10 @@ Description: Remove base slug from your custom taxonomy terms.
 Version: 1.1
 Author: Marko Heijnen
 Author URI: http://markoheijnen.com
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: wp-no-taxonomy-base
+Domain Path: /languages
 */
 
 /*
