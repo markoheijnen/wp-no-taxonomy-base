@@ -166,7 +166,6 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 			}
 
 			public function show_page() {
-				 /** @todo internationalization */
 				 /** @todo make frontend look better */
 				 /** @todo UX - notifications after an update */
 
