@@ -45,8 +45,8 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 			public function __construct() {
 				add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 				add_filter( 'template_redirect', array( $this, 'redirect' ) );
-                
-                add_action( 'admin_init', array( $this, 'settings_init' ) );
+				
+				add_action( 'admin_init', array( $this, 'settings_init' ) );
 
 				add_action( 'created_category', array( $this, 'flush_rules' ) );
 				add_action( 'delete_category', array( $this, 'flush_rules' ) );
@@ -144,38 +144,38 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 
 				return $link;
 			}
-            
-            
-            function settings_init(){
-                register_setting(
-                    'permalink', // settings page
-                    'WP_No_Taxonomy_Base' // option name
-                    // array( $this, '') // validation callback
-                );
-                
-                add_settings_section( 
-                    'wp-no-taxonomy-base-settings', 
-                    __('WP No Taxonomy Base', 'wp-no-taxonomy-base'), 
-                    array( $this, 'show_description'), 
-                    'permalink'
-                );
+			
+			
+			function settings_init(){
+				register_setting(
+					'permalink', // settings page
+					'WP_No_Taxonomy_Base' // option name
+					// array( $this, '') // validation callback
+				);
+				
+				add_settings_section( 
+					'wp-no-taxonomy-base-settings', 
+					__('WP No Taxonomy Base', 'wp-no-taxonomy-base'), 
+					array( $this, 'show_description'), 
+					'permalink'
+				);
 
-                add_settings_field(
-                    'wp-no-taxonomy-base-settings-taxonomies', // id
-                    __('Taxonomies'), // setting title
-                    array( $this, 'show_page'), // display callback
-                    'permalink', // settings page
-                    'wp-no-taxonomy-base-settings' // settings section
-                );
-            }
+				add_settings_field(
+					'wp-no-taxonomy-base-settings-taxonomies', // id
+					__('Taxonomies'), // setting title
+					array( $this, 'show_page'), // display callback
+					'permalink', // settings page
+					'wp-no-taxonomy-base-settings' // settings section
+				);
+			}
 
 
 			public function show_description() {
-                echo '<p>' . sprintf( __('Want to remove the base for a taxonomy? Just select the taxonomy below and click %s.', 'wp-no-taxonomy-base'), '"<b>' . __('Save Changes') . '</b>"') . '</p>';
-            }
-            
-            
-            public function show_page() {
+				echo '<p>' . sprintf( __('Want to remove the base for a taxonomy? Just select the taxonomy below and click %s.', 'wp-no-taxonomy-base'), '"<b>' . __('Save Changes') . '</b>"') . '</p>';
+			}
+			
+			
+			public function show_page() {
 				if( ! current_user_can('manage_options') )
 					wp_die( __('You do not have sufficient permissions to access this page.') );
 
