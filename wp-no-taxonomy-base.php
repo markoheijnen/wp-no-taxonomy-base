@@ -155,14 +155,14 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 				
 				add_settings_section( 
 					'wp-no-taxonomy-base-settings', 
-					__('WP No Taxonomy Base', 'wp-no-taxonomy-base'), 
+					__('Taxonomy Base', 'wp-no-taxonomy-base'), 
 					array( $this, 'show_description'), 
 					'permalink'
 				);
 
 				add_settings_field(
 					'wp-no-taxonomy-base-settings-taxonomies', // id
-					__('Taxonomies'), // setting title
+					__('Taxonomies', 'wp-no-taxonomy-base'), // setting title
 					array( $this, 'show_page'), // display callback
 					'permalink', // settings page
 					'wp-no-taxonomy-base-settings' // settings section
@@ -171,7 +171,7 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 
 
 			public function show_description() {
-				echo '<p>' . sprintf( __('Want to remove the base for a taxonomy? Just select the taxonomy below and click %s.', 'wp-no-taxonomy-base'), '"<b>' . __('Save Changes') . '</b>"') . '</p>';
+				echo '<p>' . __('You can remove the base from all registered taxonomies. Just select the taxonomies to remove their respective bases from your permalinks.', 'wp-no-taxonomy-base');
 			}
 			
 			
@@ -201,17 +201,27 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 						foreach( $taxonomies as $taxonomy ) {
 							$active = in_array( $taxonomy->name, $selected ) ? 'checked="checked"' : '';
 							$id     = esc_attr( 'wp-no-taxonomy-base-' . $taxonomy->name );
+                            $cpt = get_post_type_object( $taxonomy->object_type[0] );
+                            
+                            if ( '' == $active ) {
+                                $slug = '(' . __('Slug', 'wp-no-taxonomy-base') . ': <code><b>' . $taxonomy->rewrite['slug'] . '</b></code>) ';
+                            } else {
+                                $slug = sprintf( __('Slug %s is being removed.', 'wp-no-taxonomy-base'), '<code><b>' . $taxonomy->rewrite['slug'] . '</b></code>');
+                            }
 
 							printf(
 							'
 								<tr>
-									<td><label for="' . $id . '">%s</label></td>
+									<td><label for="' . $id . '">%s &rsaquo; %s</label></td>
 									<td><input type="checkbox" id="' . $id . '" name="WP_No_Taxonomy_Base[]" value="%s" %s /></td>
+                                    <td><label for="' . $id . '">%s</label></td>
 								</tr>
 							'
+                            , $cpt->labels->name
 							, $taxonomy->label
 							, $taxonomy->name
 							, $active
+                            , $slug
 							);
 						}
 					?>
