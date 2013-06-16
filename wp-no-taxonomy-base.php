@@ -171,7 +171,7 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 
 
 			public function show_description() {
-				echo '<p>' . sprintf( __('Want to remove the base for a taxonomy? Just select the taxonomy below and click %s.', 'wp-no-taxonomy-base'), '"<b>' . __('Save Changes') . '</b>"') . '</p>';
+				echo '<p>' . __('You can remove the base from all registered taxonomies. Just select the taxonomies to remove their respective bases from your permalinks.', 'wp-no-taxonomy-base');
 			}
 			
 			
@@ -204,9 +204,9 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
                             $cpt = get_post_type_object( $taxonomy->object_type[0] );
                             
                             if ( '' == $active ) {
-                                $slug = '(' . __('Slug', 'wp-no-taxonomy-base') . ': <b>' . $taxonomy->rewrite['slug'] . '</b>) ';
+                                $slug = '(' . __('Slug', 'wp-no-taxonomy-base') . ': <code><b>' . $taxonomy->rewrite['slug'] . '</b></code>) ';
                             } else {
-                                $slug = sprintf( __('Slug %s is being removed', 'wp-no-taxonomy-base'), '<b><i>' . $taxonomy->rewrite['slug'] . '</i></b>');
+                                $slug = sprintf( __('Slug %s is being removed.', 'wp-no-taxonomy-base'), '<code><b>' . $taxonomy->rewrite['slug'] . '</b></code>');
                             }
 
 							printf(
