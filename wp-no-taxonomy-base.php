@@ -45,8 +45,9 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 			public function __construct() {
 				add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 				add_filter( 'template_redirect', array( $this, 'redirect' ) );
-				
+
 				add_action( 'admin_init', array( $this, 'settings_init' ) );
+				add_action( 'current_screen', array( $this, 'settings_save' ) );
 
 				add_action( 'created_category', array( $this, 'flush_rules' ) );
 				add_action( 'delete_category', array( $this, 'flush_rules' ) );
@@ -147,12 +148,6 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 			
 			
 			function settings_init(){
-				register_setting(
-					'permalink', // settings page
-					'WP_No_Taxonomy_Base' // option name
-					// array( $this, '') // validation callback
-				);
-				
 				add_settings_section( 
 					'wp-no-taxonomy-base-settings', 
 					__('Taxonomy Base', 'wp-no-taxonomy-base'), 
@@ -160,74 +155,63 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 					'permalink'
 				);
 
-				add_settings_field(
-					'wp-no-taxonomy-base-settings-taxonomies', // id
-					__('Taxonomies', 'wp-no-taxonomy-base'), // setting title
-					array( $this, 'show_page'), // display callback
-					'permalink', // settings page
-					'wp-no-taxonomy-base-settings' // settings section
-				);
+				$taxonomies = get_taxonomies( array( 'public' => true ), 'objects' );
+
+				foreach( $taxonomies as $taxonomy ) {
+					add_settings_field(
+						'wp-no-taxonomy-base-settings-' . $taxonomy->name, // id
+						$taxonomy->label,
+						array( $this, 'show_page'), // display callback
+						'permalink', // settings page
+						'wp-no-taxonomy-base-settings', // settings section
+						array( 'taxonomy' => $taxonomy )
+					);
+				}
 			}
 
+			public function settings_save( $screen ) {
+				if( 'options-permalink' == $screen->base && isset( $_POST['wp-no-taxonomy-base-nonce'] ) ) {
+					if( wp_verify_nonce( $_POST['wp-no-taxonomy-base-nonce'], 'wp-no-taxonomy-base-update-taxonomies' ) ) {
+						update_option( 'WP_No_Taxonomy_Base', ( isset( $_POST['WP_No_Taxonomy_Base'] ) ) ? $_POST['WP_No_Taxonomy_Base'] : false );
+					}
+				}
+			}
 
 			public function show_description() {
 				echo '<p>' . __('You can remove the base from all registered taxonomies. Just select the taxonomies to remove their respective bases from your permalinks.', 'wp-no-taxonomy-base');
+				wp_nonce_field( 'wp-no-taxonomy-base-update-taxonomies', 'wp-no-taxonomy-base-nonce' );
 			}
 			
-			
-			public function show_page() {
-				if( ! current_user_can('manage_options') )
-					wp_die( __('You do not have sufficient permissions to access this page.') );
+			public function show_page( $args ) {
+				$taxonomy  = $args['taxonomy'];
+				$selected  = get_option( 'WP_No_Taxonomy_Base', array() );
+				$active    = in_array( $taxonomy->name, $selected ) ? 'checked="checked"' : '';
+				$id        = esc_attr( 'wp-no-taxonomy-base-' . $taxonomy->name );
+				$cpts      = array();
 
-				if( isset( $_POST['vesave'] ) && $_POST['vesave'] == 'save' ) {
-					if( isset( $_POST['wp-no-taxonomy-base-nonce'] ) && wp_verify_nonce( $_POST['wp-no-taxonomy-base-nonce'], 'wp-no-taxonomy-base-update-taxonomies' ) ) {
-						update_option( 'WP_No_Taxonomy_Base', ( isset( $_POST['WP_No_Taxonomy_Base'] ) ) ? $_POST['WP_No_Taxonomy_Base'] : false );
-
-						$this->flush_rules();
-					}
+				foreach( $taxonomy->object_type as $object_type ) {
+					$cpts[] = get_post_type_object( $object_type );
 				}
 
-				$taxonomies = get_taxonomies( array( 'public' => true ), 'objects' ); 
-				$selected   = get_option('WP_No_Taxonomy_Base');
+				$cpt_names = implode( ', ', wp_list_pluck( $cpts, 'label' ) );
+				
+				if ( '' == $active )
+					$slug = '(' . __( 'Slug', 'wp-no-taxonomy-base' ) . ': <code><b>' . $taxonomy->rewrite['slug'] . '</b></code>) ';
+				else
+					$slug = sprintf( __( 'Slug %s is being removed.', 'wp-no-taxonomy-base' ), '<code><b>' . $taxonomy->rewrite['slug'] . '</b></code>' );
 
-				if( ! $selected )
-					$selected = array();
-				?>
-					<?php wp_nonce_field( 'wp-no-taxonomy-base-update-taxonomies', 'wp-no-taxonomy-base-nonce' ); ?>
-					<input type="hidden" name="vesave" value="save" />
-
-					<table>
-					<?php
-						foreach( $taxonomies as $taxonomy ) {
-							$active = in_array( $taxonomy->name, $selected ) ? 'checked="checked"' : '';
-							$id     = esc_attr( 'wp-no-taxonomy-base-' . $taxonomy->name );
-                            $cpt = get_post_type_object( $taxonomy->object_type[0] );
-                            
-                            if ( '' == $active ) {
-                                $slug = '(' . __('Slug', 'wp-no-taxonomy-base') . ': <code><b>' . $taxonomy->rewrite['slug'] . '</b></code>) ';
-                            } else {
-                                $slug = sprintf( __('Slug %s is being removed.', 'wp-no-taxonomy-base'), '<code><b>' . $taxonomy->rewrite['slug'] . '</b></code>');
-                            }
-
-							printf(
-							'
-								<tr>
-									<td><label for="' . $id . '">%s &rsaquo; %s</label></td>
-									<td><input type="checkbox" id="' . $id . '" name="WP_No_Taxonomy_Base[]" value="%s" %s /></td>
-                                    <td><label for="' . $id . '">%s</label></td>
-								</tr>
-							'
-                            , $cpt->labels->name
-							, $taxonomy->label
-							, $taxonomy->name
-							, $active
-                            , $slug
-							);
-						}
-					?>
-					</table>
-
-			<?php
+				printf(
+					'
+						<input type="checkbox" id="' . $id . '" name="WP_No_Taxonomy_Base[]" value="%s" %s />
+						<label for="' . $id . '">%s | %s %s | %s </label>
+					',
+					$taxonomy->name,
+					$active,
+					__( 'Remove base' ),
+					__( 'For post type(s)' ),
+					$cpt_names,
+					$slug
+				);
 
 			}
 
