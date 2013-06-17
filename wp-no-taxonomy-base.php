@@ -141,6 +141,8 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 		}
 
 		public function settings_init() {
+			load_plugin_textdomain( 'wp-no-taxonomy-base', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+			
 			add_settings_section( 
 				'wp-no-taxonomy-base-settings', 
 				__('Taxonomy Base', 'wp-no-taxonomy-base'), 
@@ -168,8 +170,6 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 					update_option( 'WP_No_Taxonomy_Base', ( isset( $_POST['WP_No_Taxonomy_Base'] ) ) ? $_POST['WP_No_Taxonomy_Base'] : false );
 				}
 			}
-
-			load_plugin_textdomain( 'wp-no-taxonomy-base', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 		}
 
 		public function show_description() {
