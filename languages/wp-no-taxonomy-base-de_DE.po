@@ -1,0 +1,37 @@
+# Translation of WP No Taxonomy Base in German
+# This file is distributed under the same license as the WP No Taxonomy Base package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2013-06-17 11:24:04+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: translate.foe-services.de/ReGlot/0.1\n"
+"Project-Id-Version: WP No Taxonomy Base\n"
+"Language-Team: Translate.foe-services.de <translate@foe-services.de>\n"
+"Language: German\n"
+
+#: wp-no-taxonomy-base.php:148
+msgid "Taxonomy Base"
+msgstr "Taxonomie-Basis"
+
+#: wp-no-taxonomy-base.php:177
+msgid "You can remove the base from all registered taxonomies. Just select the taxonomies to remove their respective bases from your permalinks."
+msgstr "Du kannst die Basis aller registrierten Taxonomien entfernen. Wähle einfach die Taxonomien aus von deren Permalinks du die Basis entfernen willst."
+
+#: wp-no-taxonomy-base.php:201
+msgid "Activate to remove Slug %s from Post Type(s) %s"
+msgstr "Aktviere dies um die Basis %s des/der Inhaltstyp(en) %s zu entfernen"
+
+msgid "WP No Taxonomy Base"
+msgstr "WP No Taxonomy Base"
+
+msgid "http://markoheijnen.com"
+msgstr "http://markoheijnen.com"
+
+msgid "Remove base slug from your custom taxonomy terms."
+msgstr "Entferne die Permalink Basis von Taxonomien"
+
+msgid "Marko Heijnen"
+msgstr "Marko Heijnen"

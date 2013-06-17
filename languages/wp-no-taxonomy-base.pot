@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP No Taxonomy Base 1.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-no-taxonomy-base\n"
-"POT-Creation-Date: 2013-06-10 14:01:33+00:00\n"
+"POT-Creation-Date: 2013-06-17 10:35:02+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,24 +12,22 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#. #-#-#-#-#  wp-no-taxonomy-base.pot (WP No Taxonomy Base 1.1)  #-#-#-#-#
-#. Plugin Name of the plugin/theme
-#: wp-no-taxonomy-base.php:165 wp-no-taxonomy-base.php:192
-msgid "WP No Taxonomy Base"
+#: wp-no-taxonomy-base.php:148
+msgid "Taxonomy Base"
 msgstr ""
 
-#: wp-no-taxonomy-base.php:173
-msgid "You do not have sufficient permissions to access this page."
-msgstr ""
-
-#: wp-no-taxonomy-base.php:194
+#: wp-no-taxonomy-base.php:177
 msgid ""
-"Want to remove the base for a taxonomy? Just select the taxonomy below and "
-"click \"%s\"."
+"You can remove the base from all registered taxonomies. Just select the "
+"taxonomies to remove their respective bases from your permalinks."
 msgstr ""
 
-#: wp-no-taxonomy-base.php:194 wp-no-taxonomy-base.php:223
-msgid "Save"
+#: wp-no-taxonomy-base.php:201
+msgid "Activate to remove Slug %s from Post Type(s) %s"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "WP No Taxonomy Base"
 msgstr ""
 
 #. #-#-#-#-#  wp-no-taxonomy-base.pot (WP No Taxonomy Base 1.1)  #-#-#-#-#
