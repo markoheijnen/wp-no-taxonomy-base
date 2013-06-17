@@ -170,7 +170,8 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 						update_option( 'WP_No_Taxonomy_Base', ( isset( $_POST['WP_No_Taxonomy_Base'] ) ) ? $_POST['WP_No_Taxonomy_Base'] : false );
 					}
 				}
-                                load_plugin_textdomain( 'wp-no-taxonomy-base', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+				
+				load_plugin_textdomain( 'wp-no-taxonomy-base', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 			}
 
 			public function show_description() {
@@ -190,11 +191,6 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 				}
 
 				$cpt_names = implode( ', ', wp_list_pluck( $cpts, 'label' ) );
-				
-				if ( '' == $active )
-                                        $slug = sprintf( __( 'Activate to remove Slug %s from <abbr title="Post Type">PT(s)</abbr> %s', 'wp-no-taxonomy-base' ), '<code><b>' . $taxonomy->rewrite['slug'] . '</b></code>', '<i>' . $cpt_names . '</i>' );
-				else
-					$slug = sprintf( __( 'Slug %s is being removed from <abbr title="Post Type">PT(s)</abbr> %s', 'wp-no-taxonomy-base' ), '<code><b>' . $taxonomy->rewrite['slug'] . '</b></code>', '<i>' . $cpt_names . '</i>' );
 
 				printf(
 					'
@@ -203,7 +199,7 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 					',
 					$taxonomy->name,
 					$active,
-					$slug
+					sprintf( __('Activate to remove Slug %s from Post Type(s) %s', 'wp-no-taxonomy-base'), '<code><b>' . $taxonomy->rewrite['slug'] . '</b></code>', '<i>' . $cpt_names . '</i>' )
 				);
 
 			}
