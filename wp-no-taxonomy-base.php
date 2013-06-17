@@ -192,20 +192,17 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 				$cpt_names = implode( ', ', wp_list_pluck( $cpts, 'label' ) );
 				
 				if ( '' == $active )
-					$slug = '(' . __( 'Slug', 'wp-no-taxonomy-base' ) . ': <code><b>' . $taxonomy->rewrite['slug'] . '</b></code>) ';
+                                        $slug = sprintf( __( 'Activate to remove Slug %s from <abbr title="Post Type">PT(s)</abbr> %s', 'wp-no-taxonomy-base' ), '<code><b>' . $taxonomy->rewrite['slug'] . '</b></code>', '<i>' . $cpt_names . '</i>' );
 				else
-					$slug = sprintf( __( 'Slug %s is being removed.', 'wp-no-taxonomy-base' ), '<code><b>' . $taxonomy->rewrite['slug'] . '</b></code>' );
+					$slug = sprintf( __( 'Slug %s is being removed from <abbr title="Post Type">PT(s)</abbr> %s', 'wp-no-taxonomy-base' ), '<code><b>' . $taxonomy->rewrite['slug'] . '</b></code>', '<i>' . $cpt_names . '</i>' );
 
 				printf(
 					'
 						<input type="checkbox" id="' . $id . '" name="WP_No_Taxonomy_Base[]" value="%s" %s />
-						<label for="' . $id . '">%s | %s %s | %s </label>
+						<label for="' . $id . '"> %s </label>
 					',
 					$taxonomy->name,
 					$active,
-					__( 'Remove base' ),
-					__( 'For post type(s)' ),
-					$cpt_names,
 					$slug
 				);
 
