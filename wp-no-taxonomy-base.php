@@ -167,7 +167,7 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 		public function settings_save( $screen ) {
 			if( 'options-permalink' == $screen->base && isset( $_POST['wp-no-taxonomy-base-nonce'] ) ) {
 				if( wp_verify_nonce( $_POST['wp-no-taxonomy-base-nonce'], 'wp-no-taxonomy-base-update-taxonomies' ) ) {
-					update_option( 'WP_No_Taxonomy_Base', ( isset( $_POST['WP_No_Taxonomy_Base'] ) ) ? $_POST['WP_No_Taxonomy_Base'] : false );
+					update_option( 'WP_No_Taxonomy_Base', ( isset( $_POST['WP_No_Taxonomy_Base'] ) ) ? $_POST['WP_No_Taxonomy_Base'] : array() );
 				}
 			}
 		}
@@ -180,9 +180,13 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 		public function show_page( $args ) {
 			$taxonomy  = $args['taxonomy'];
 			$selected  = get_option( 'WP_No_Taxonomy_Base', array() );
-			$active    = in_array( $taxonomy->name, $selected ) ? 'checked="checked"' : '';
 			$id        = esc_attr( 'wp-no-taxonomy-base-' . $taxonomy->name );
 			$cpts      = array();
+
+			if( ! $selected )
+				$selected = array();
+
+			$active    = in_array( $taxonomy->name, $selected ) ? 'checked="checked"' : '';
 
 			foreach( $taxonomy->object_type as $object_type ) {
 				$cpts[] = get_post_type_object( $object_type );
