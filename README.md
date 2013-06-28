@@ -5,16 +5,16 @@ __Remove base slug from your custom taxonomy terms.__
 
 | WordPress					| Version			| *		| Development				|					|
 | ----:						| :----				| :---: | :----						| :----				|
-| Requires at least:		| __3.3__			| *		| [GitHub-Repository][1.3]	| [Translate][1.6]	|
+| Requires at least:		| __3.1__			| *		| [GitHub-Repository][1.3]	| [Translate][1.6]	|
 | Tested up to:				| __3.6__			| *		| [Issue-Tracker][1.4]		|					|
-| Current stable release:	| __[1.1][1.5]__	| *		| Current dev version:		| [1.3-dev][1.7]	|
+| Current stable release:	| __[1.1][1.5]__	| *		| Current dev version:		| [1.2-dev][1.7]	|
 
 [1.1]: http://markoheijnen.com
 [1.2]: #
 [1.3]: https://github.com/markoheijnen/wp-no-taxonomy-base
 [1.4]: https://github.com/markoheijnen/wp-no-taxonomy-base/issues
 [1.5]: #
-[1.6]: https://translate.foe-services.de/projects/wp-no-taxonomy-base
+[1.6]: http://wp-translate.org/projects/wp-no-taxonomy-base
 [1.7]: https://github.com/markoheijnen/wp-no-taxonomy-base/archive/master.zip
 
 ### Description

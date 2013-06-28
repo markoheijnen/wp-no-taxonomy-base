@@ -173,7 +173,7 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 		}
 
 		public function show_description() {
-			echo '<p>' . __('You can remove the base from all registered taxonomies. Just select the taxonomies to remove their respective bases from your permalinks.', 'wp-no-taxonomy-base');
+			echo '<p>' . __('You can remove the base from all registered taxonomies. Just select the taxonomies to remove their respective bases from your permalinks.', 'wp-no-taxonomy-base') . '</p>';
 			wp_nonce_field( 'wp-no-taxonomy-base-update-taxonomies', 'wp-no-taxonomy-base-nonce' );
 		}
 		
