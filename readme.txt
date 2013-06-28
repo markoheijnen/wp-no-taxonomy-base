@@ -2,7 +2,7 @@
 Contributors: Marko Heijnen, cfoellmann, Jaime Martinez, Luke Thomas, David DiGiovanni
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CQFB8UMDTEGGG
 Tags: taxonomy, custom taxonomy
-Requires at least: 3.3
+Requires at least: 3.1
 Tested up to: 3.6
 Stable tag: trunk
 License: GPLv2 or later
@@ -13,6 +13,8 @@ This is a WordPress plugin to remove the base slug on custom taxonomies.
 == Description ==
 
 This is a WordPress plugin to remove the base slug on custom taxonomies. It removes the base slug for both custom taxonomies and the default "category" taxonomy for posts.
+
+Follow the development and/or contribute at https://github.com/markoheijnen/wp-no-taxonomy-base
 
 == Installation ==
 
