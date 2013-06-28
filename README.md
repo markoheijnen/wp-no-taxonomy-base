@@ -13,7 +13,7 @@ __Remove base slug from your custom taxonomy terms.__
 [1.2]: #
 [1.3]: https://github.com/markoheijnen/wp-no-taxonomy-base
 [1.4]: https://github.com/markoheijnen/wp-no-taxonomy-base/issues
-[1.5]: https://github.com/markoheijnen/tabify-edit-screen/tree/1.1
+[1.5]: https://github.com/markoheijnen/wp-no-taxonomy/tree/1.1
 [1.6]: http://wp-translate.org/projects/wp-no-taxonomy-base
 [1.7]: https://github.com/markoheijnen/wp-no-taxonomy-base/archive/master.zip
 
