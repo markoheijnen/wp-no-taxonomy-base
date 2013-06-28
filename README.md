@@ -13,7 +13,7 @@ __Remove base slug from your custom taxonomy terms.__
 [1.2]: #
 [1.3]: https://github.com/markoheijnen/wp-no-taxonomy-base
 [1.4]: https://github.com/markoheijnen/wp-no-taxonomy-base/issues
-[1.5]: #
+[1.5]: 
 [1.6]: http://wp-translate.org/projects/wp-no-taxonomy-base
 [1.7]: https://github.com/markoheijnen/wp-no-taxonomy-base/archive/master.zip
 
@@ -24,12 +24,16 @@ This is a WordPress plugin to remove the base slug on custom taxonomies. It remo
 ## Developers
 | Name					| GitHub				| WordPress.org			| Web                                   | Status				|
 | :----					| :----					| :----					| :----                                 | ----:					|
-| Marko Heijnen			| [markoheijnen][2.1.1]	| [markoheijnen][2.1.2]	| http://markoheijnen.com               | Active				|
+| Marko Heijnen         | [markoheijnen][2.1.1] | [markoheijnen][2.1.2] | http://markoheijnen.com               | Active                |
+| Christian Foellmann   | [cfoellmann][2.2.1]   | [cfoellmann][2.2.2]   | http://foe-services.de                | Active                |
 | Luke Thomas           |                   	|                   	| https://twitter.com/luk3thomas        | Inactive				|
 | David DiGiovanni		|                   	|                   	| https://twitter.com/daviddigiovanni   | Inactive				|
 
 [2.1.1]: https://github.com/markoheijnen
 [2.1.2]: http://profiles.wordpress.org/markoheijnen/
+
+[2.2.1]: https://github.com/cfoellmann
+[2.2.2]: http://profiles.wordpress.org/cfoellmann/
 
 
 ## License

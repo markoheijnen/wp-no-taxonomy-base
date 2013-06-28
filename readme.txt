@@ -31,7 +31,7 @@ This plugin was developed by Luke Thomas (http://twitter.com/luk3thomas) and sub
 
 == Changelog ==
 
-= 1.1 ( 2013-6-10 ) =
+= 1.1 ( 2013-6-28 ) =
 * Fix not working redirect
 * Always show correct link to the terms
 * Fix notices (Thanks to Jaime Martinez)
