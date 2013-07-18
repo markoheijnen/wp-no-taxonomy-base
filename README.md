@@ -1,13 +1,13 @@
 # WP No Taxonomy Base
 __Remove base slug from your custom taxonomy terms.__
 
-[Homepage][1.1] | [WordPress.org][1.2]
+Master: [![Build Status](https://travis-ci.org/markoheijnen/wp-no-taxonomy-base.png?branch=master)](https://travis-ci.org/markoheijnen/wp-no-taxonomy-base)
 
-| WordPress					| Version			| *		| Development				|					|
-| ----:						| :----				| :---: | :----						| :----				|
-| Requires at least:		| __3.1__			| *		| [GitHub-Repository][1.3]	| [Translate][1.6]	|
-| Tested up to:				| __3.6__			| *		| [Issue-Tracker][1.4]		|					|
-| Current stable release:	| __[1.1][1.5]__	| *		| Current dev version:		| [1.2-dev][1.7]	|
+| *						| WordPress					| Version			| *		| Development				|					|
+| :----					| ----:						| :----				| :---: | :----						| :----				|
+| [Homepage][1.1]		| Requires at least:		| __3.1__			| *		| [GitHub-Repository][1.3]	| [Translate][1.6]	|
+| *						| Tested up to:				| __3.6__			| *		| [Issue-Tracker][1.4]		|					|
+| *						| Current stable release:	| __[1.1][1.5]__	| *		| Current dev version:		| [1.2-dev][1.7]	|
 
 [1.1]: http://markoheijnen.com
 [1.2]: #
