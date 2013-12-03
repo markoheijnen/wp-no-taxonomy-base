@@ -42,6 +42,8 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 	class WP_No_Taxonomy_Base {
 
 		public function __construct() {
+            add_action('category_rewrite_rules', array($this , 'no_category_base_permastruct'    )  ) ;			
+	    		    
 			add_filter( 'template_redirect', array( $this, 'redirect' ) );
 			add_filter( 'term_link', array( $this, 'correct_term_link' ), 10, 3 );
 
@@ -53,6 +55,7 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 			add_action( 'edited_category', array( $this, 'flush_rules' ) );
 
 			add_filter( 'category_rewrite_rules', array( $this, 'add_rules' ) );
+			
 		}
 
 		public function flush_rules() {
@@ -60,6 +63,22 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 
 			$wp_rewrite->flush_rules();
 		}
+		
+		
+        /**
+         * Removes category base.
+         *
+         * @return void
+         */
+        public function no_category_base_permastruct() {
+        	global $wp_rewrite;
+          global $wp_version;
+          if ($wp_version >= 3.4) {
+        	  $wp_rewrite->extra_permastructs['category']['struct'] = '%category%';
+          } else {
+            $wp_rewrite->extra_permastructs['category'][0] = '%category%';
+          }
+        }		
 
 
 		public function redirect() {
