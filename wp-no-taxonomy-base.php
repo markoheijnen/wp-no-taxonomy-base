@@ -42,6 +42,8 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 	class WP_No_Taxonomy_Base {
 
 		public function __construct() {
+            add_action('category_rewrite_rules', array($this , 'no_category_base_permastruct'    )  ) ;			
+	    		    
 			add_filter( 'template_redirect', array( $this, 'redirect' ) );
 			add_filter( 'term_link', array( $this, 'correct_term_link' ), 10, 3 );
 
@@ -54,7 +56,6 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 
 			add_filter( 'category_rewrite_rules', array( $this, 'add_rules' ) );
 			
-            add_action('init', array($this , 'no_category_base_permastruct'    )  ) ;			
 		}
 
 		public function flush_rules() {
