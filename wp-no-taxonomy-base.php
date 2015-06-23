@@ -122,7 +122,20 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 			 * Loop em.
 			 * -------------------------------------------- */
 			foreach( $taxonomies as $taxonomy ) {
-				$categories = get_terms( $taxonomy, $args );
+
+                global $sitepress;
+
+                // remove WPML term filters
+                remove_filter('get_terms_args', array($sitepress, 'get_terms_args_filter'));
+                remove_filter('get_term', array($sitepress,'get_term_adjust_id'));
+                remove_filter('terms_clauses', array($sitepress,'terms_clauses'));
+
+                $categories = get_terms( $taxonomy, $args );
+
+                // restore WPML term filters
+                add_filter('terms_clauses', array($sitepress,'terms_clauses'));
+                add_filter('get_term', array($sitepress,'get_term_adjust_id'));
+                add_filter('get_terms_args', array($sitepress, 'get_terms_args_filter'));
 
 				foreach( $categories as $category ) {
 					$slug = $category->slug;
