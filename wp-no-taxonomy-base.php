@@ -133,9 +133,9 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
                 $categories = get_terms( $taxonomy, $args );
 
                 // restore WPML term filters
-                add_filter('terms_clauses', array($sitepress,'terms_clauses'));
+                add_filter('terms_clauses', array($sitepress,'terms_clauses'), 10, 3);
                 add_filter('get_term', array($sitepress,'get_term_adjust_id'));
-                add_filter('get_terms_args', array($sitepress, 'get_terms_args_filter'));
+                add_filter('get_terms_args', array($sitepress, 'get_terms_args_filter'), 10, 2);
 
 				foreach( $categories as $category ) {
 					$slug = $category->slug;
