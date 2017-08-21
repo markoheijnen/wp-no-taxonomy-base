@@ -32,12 +32,12 @@ Domain Path: /languages
 
 //avoid direct calls to this file
 if ( ! function_exists( 'add_filter' ) ) {
-	header('Status: 403 Forbidden');
-	header('HTTP/1.1 403 Forbidden');
+	header( 'Status: 403 Forbidden' );
+	header( 'HTTP/1.1 403 Forbidden' );
 	exit();
 }
 
-if ( ! class_exists('WP_No_Taxonomy_Base') ) {
+if ( ! class_exists( 'WP_No_Taxonomy_Base' ) ) {
 
 	class WP_No_Taxonomy_Base {
 
@@ -65,18 +65,19 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 		public function redirect() {
 			global $wp, $wp_query;
 
-			if( is_category() || is_tag() || is_tax() ) {
-				$taxonomies = get_option('WP_No_Taxonomy_Base');
+			if ( is_category() || is_tag() || is_tax() ) {
+				$taxonomies = get_option( 'WP_No_Taxonomy_Base' );
 				$taxonomy   = get_queried_object()->taxonomy;
 
 				/** Bail */
-				if( ! $taxonomies )
+				if ( ! $taxonomies ) {
 					return false;
+				}
 
-				if( in_array( $taxonomy, $taxonomies ) ) {
+				if ( in_array( $taxonomy, $taxonomies ) ) {
 					$url = home_url( $wp->request );
 
-					if( strrpos( $url, '/' . $taxonomy . '/' ) ) {
+					if ( strrpos( $url, '/' . $taxonomy . '/' ) ) {
 						$new_url = str_replace( '/' . $taxonomy . '/', '/', $url );
 
 						wp_redirect( $new_url, 301 );
@@ -87,11 +88,12 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 		}
 
 		public function correct_term_link( $link, $feed, $taxonomy ) {
-			$taxonomies = get_option('WP_No_Taxonomy_Base');
+			$taxonomies = get_option( 'WP_No_Taxonomy_Base' );
 
-			if( $taxonomies ) {
-				if( in_array( $taxonomy, $taxonomies ) )
+			if ( $taxonomies ) {
+				if ( in_array( $taxonomy, $taxonomies ) ) {
 					$link = str_replace( $taxonomy . '/', '', $link );
+				}
 			}
 
 			return $link;
@@ -100,49 +102,50 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 
 		public function add_rules( $rules ) {
 			/**
-			 * @todo 
+			 * @todo
 			 *
-			 * Create rewrite rules for terms when 
+			 * Create rewrite rules for terms when
 			 * they are nested under a parent term.
 			 *
-			 * Example: 
+			 * Example:
 			 * http://#{base_url}/#{parent_term}/#{child_term}
 			 *
 			 * -------------------------------------------- */
 
-			$taxonomies = get_option('WP_No_Taxonomy_Base');
+			$taxonomies = get_option( 'WP_No_Taxonomy_Base' );
 
 			/** Time to bail. */
-			if( ! $taxonomies )
+			if ( ! $taxonomies ) {
 				return $rules;
+			}
 
-			$args  = array( 'hide_empty' => false );
+			$args = array( 'hide_empty' => false );
 
 			/**
 			 * Loop em.
 			 * -------------------------------------------- */
-			foreach( $taxonomies as $taxonomy ) {
+			foreach ( $taxonomies as $taxonomy ) {
 
-                global $sitepress;
+				global $sitepress;
 
-                // remove WPML term filters
-                remove_filter('get_terms_args', array($sitepress, 'get_terms_args_filter'));
-                remove_filter('get_term', array($sitepress,'get_term_adjust_id'));
-                remove_filter('terms_clauses', array($sitepress,'terms_clauses'));
+				// remove WPML term filters
+				remove_filter( 'get_terms_args', array( $sitepress, 'get_terms_args_filter' ) );
+				remove_filter( 'get_term', array( $sitepress, 'get_term_adjust_id' ) );
+				remove_filter( 'terms_clauses', array( $sitepress, 'terms_clauses' ) );
 
-                $categories = get_terms( $taxonomy, $args );
+				$categories = get_terms( $taxonomy, $args );
 
-                // restore WPML term filters
-                add_filter('terms_clauses', array($sitepress,'terms_clauses'));
-                add_filter('get_term', array($sitepress,'get_term_adjust_id'));
-                add_filter('get_terms_args', array($sitepress, 'get_terms_args_filter'));
+				// restore WPML term filters
+				add_filter( 'terms_clauses', array( $sitepress, 'terms_clauses' ), 10, 3 );
+				add_filter( 'get_term', array( $sitepress, 'get_term_adjust_id' ) );
+				add_filter( 'get_terms_args', array( $sitepress, 'get_terms_args_filter' ), 10, 2 );
 
-				foreach( $categories as $category ) {
+				foreach ( $categories as $category ) {
 					$slug = $category->slug;
 
-					$feed_rule  = sprintf( 'index.php?taxonomy=%s&term=%s&feed=$matches[1]'  , $taxonomy , $slug );
-					$paged_rule = sprintf( 'index.php?taxonomy=%s&term=%s&paged=$matches[1]' , $taxonomy , $slug );
-					$base_rule  = sprintf( 'index.php?taxonomy=%s&term=%s'                   , $taxonomy , $slug );
+					$feed_rule  = sprintf( 'index.php?taxonomy=%s&term=%s&feed=$matches[1]', $taxonomy, $slug );
+					$paged_rule = sprintf( 'index.php?taxonomy=%s&term=%s&paged=$matches[1]', $taxonomy, $slug );
+					$base_rule  = sprintf( 'index.php?taxonomy=%s&term=%s', $taxonomy, $slug );
 
 					$rules[ $slug . '/(?:feed/)?(feed|rdf|rss|rss2|atom)/?$' ] = $feed_rule;
 					$rules[ $slug . '/page/?([0-9]{1,})/?$' ]                  = $paged_rule;
@@ -155,21 +158,21 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 
 		public function settings_init() {
 			load_plugin_textdomain( 'wp-no-taxonomy-base', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-			
-			add_settings_section( 
-				'wp-no-taxonomy-base-settings', 
-				__('Taxonomy Base', 'wp-no-taxonomy-base'), 
-				array( $this, 'show_description'), 
+
+			add_settings_section(
+				'wp-no-taxonomy-base-settings',
+				__( 'Taxonomy Base', 'wp-no-taxonomy-base' ),
+				array( $this, 'show_description' ),
 				'permalink'
 			);
 
 			$taxonomies = get_taxonomies( array( 'public' => true ), 'objects' );
 
-			foreach( $taxonomies as $taxonomy ) {
+			foreach ( $taxonomies as $taxonomy ) {
 				add_settings_field(
 					'wp-no-taxonomy-base-settings-' . $taxonomy->name, // id
 					$taxonomy->label,
-					array( $this, 'show_page'), // display callback
+					array( $this, 'show_page' ), // display callback
 					'permalink', // settings page
 					'wp-no-taxonomy-base-settings', // settings section
 					array( 'taxonomy' => $taxonomy )
@@ -178,30 +181,31 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 		}
 
 		public function settings_save( $screen ) {
-			if( 'options-permalink' == $screen->base && isset( $_POST['wp-no-taxonomy-base-nonce'] ) ) {
-				if( wp_verify_nonce( $_POST['wp-no-taxonomy-base-nonce'], 'wp-no-taxonomy-base-update-taxonomies' ) ) {
+			if ( 'options-permalink' == $screen->base && isset( $_POST['wp-no-taxonomy-base-nonce'] ) ) {
+				if ( wp_verify_nonce( $_POST['wp-no-taxonomy-base-nonce'], 'wp-no-taxonomy-base-update-taxonomies' ) ) {
 					update_option( 'WP_No_Taxonomy_Base', ( isset( $_POST['WP_No_Taxonomy_Base'] ) ) ? $_POST['WP_No_Taxonomy_Base'] : array() );
 				}
 			}
 		}
 
 		public function show_description() {
-			echo '<p>' . __('You can remove the base from all registered taxonomies. Just select the taxonomies to remove their respective bases from your permalinks.', 'wp-no-taxonomy-base') . '</p>';
+			echo '<p>' . __( 'You can remove the base from all registered taxonomies. Just select the taxonomies to remove their respective bases from your permalinks.', 'wp-no-taxonomy-base' ) . '</p>';
 			wp_nonce_field( 'wp-no-taxonomy-base-update-taxonomies', 'wp-no-taxonomy-base-nonce' );
 		}
-		
+
 		public function show_page( $args ) {
-			$taxonomy  = $args['taxonomy'];
-			$selected  = get_option( 'WP_No_Taxonomy_Base', array() );
-			$id        = esc_attr( 'wp-no-taxonomy-base-' . $taxonomy->name );
-			$cpts      = array();
+			$taxonomy = $args['taxonomy'];
+			$selected = get_option( 'WP_No_Taxonomy_Base', array() );
+			$id       = esc_attr( 'wp-no-taxonomy-base-' . $taxonomy->name );
+			$cpts     = array();
 
-			if( ! $selected )
+			if ( ! $selected ) {
 				$selected = array();
+			}
 
-			$active    = in_array( $taxonomy->name, $selected ) ? 'checked="checked"' : '';
+			$active = in_array( $taxonomy->name, $selected ) ? 'checked="checked"' : '';
 
-			foreach( $taxonomy->object_type as $object_type ) {
+			foreach ( $taxonomy->object_type as $object_type ) {
 				$cpts[] = get_post_type_object( $object_type );
 			}
 
@@ -214,7 +218,7 @@ if ( ! class_exists('WP_No_Taxonomy_Base') ) {
 				',
 				$taxonomy->name,
 				$active,
-				sprintf( __('Activate to remove Slug %s from Post Type(s) %s', 'wp-no-taxonomy-base'), '<code><b>' . $taxonomy->rewrite['slug'] . '</b></code>', '<i>' . $cpt_names . '</i>' )
+				sprintf( __( 'Activate to remove Slug %s from Post Type(s) %s', 'wp-no-taxonomy-base' ), '<code><b>' . $taxonomy->rewrite['slug'] . '</b></code>', '<i>' . $cpt_names . '</i>' )
 			);
 
 		}
