@@ -1,0 +1,7 @@
+{
+  "name": "ocreaper/wp-no-taxonomy-base",
+  "type": "wordpress-plugin",
+  "config": {
+    "preferred-install": "dist"
+  }
+}
