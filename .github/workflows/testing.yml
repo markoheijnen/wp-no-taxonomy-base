@@ -1,0 +1,30 @@
+name: Run plugin tests
+on: [push, pull_request]
+jobs:
+  phpcs:
+    runs-on: ubuntu-latest
+    name: Check WP Coding Standards
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v1
+        with:
+          php-version: '7.3'
+          extension-csv: mbstring, intl
+          ini-values-csv: post_max_size=256M, short_open_tag=On
+          coverage: none
+          pecl: false
+          tools: phpcs
+
+      - name: Setup PHPCS for WordPress
+        run: |
+          composer global require phpcompatibility/phpcompatibility-wp
+          composer global require wp-coding-standards/wpcs
+          composer global require automattic/vipwpcs
+          composer global require dealerdirect/phpcodesniffer-composer-installer
+
+      - name: Run PHPCS on the plugin
+        run: phpcs
+
