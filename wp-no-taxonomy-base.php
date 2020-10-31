@@ -63,7 +63,7 @@ if ( ! class_exists( 'WP_No_Taxonomy_Base' ) ) {
 
 
 		public function redirect() {
-			global $wp, $wp_query;
+			global $wp;
 
 			if ( is_category() || is_tag() || is_tax() ) {
 				$taxonomies = get_option( 'WP_No_Taxonomy_Base' );
@@ -74,7 +74,7 @@ if ( ! class_exists( 'WP_No_Taxonomy_Base' ) ) {
 					return false;
 				}
 
-				if ( in_array( $taxonomy, $taxonomies ) ) {
+				if ( in_array( $taxonomy, $taxonomies, true ) ) {
 					$url = home_url( $wp->request );
 
 					if ( strrpos( $url, '/' . $taxonomy . '/' ) ) {
@@ -91,7 +91,7 @@ if ( ! class_exists( 'WP_No_Taxonomy_Base' ) ) {
 			$taxonomies = get_option( 'WP_No_Taxonomy_Base' );
 
 			if ( $taxonomies ) {
-				if ( in_array( $taxonomy, $taxonomies ) ) {
+				if ( in_array( $taxonomy, $taxonomies, true ) ) {
 					$link = str_replace( $taxonomy . '/', '', $link );
 				}
 			}
@@ -181,7 +181,7 @@ if ( ! class_exists( 'WP_No_Taxonomy_Base' ) ) {
 		}
 
 		public function settings_save( $screen ) {
-			if ( 'options-permalink' == $screen->base && isset( $_POST['wp-no-taxonomy-base-nonce'] ) ) {
+			if ( 'options-permalink' === $screen->base && isset( $_POST['wp-no-taxonomy-base-nonce'] ) ) {
 				if ( wp_verify_nonce( sanitize_text_field( $_POST['wp-no-taxonomy-base-nonce'] ), 'wp-no-taxonomy-base-update-taxonomies' ) ) {
 					update_option( 'WP_No_Taxonomy_Base', ( isset( $_POST['WP_No_Taxonomy_Base'] ) ) ? sanitize_text_field( $_POST['WP_No_Taxonomy_Base'] ) : array() );
 				}
@@ -203,7 +203,7 @@ if ( ! class_exists( 'WP_No_Taxonomy_Base' ) ) {
 				$selected = array();
 			}
 
-			$active = in_array( $taxonomy->name, $selected ) ? 'checked="checked"' : '';
+			$active = in_array( $taxonomy->name, $selected, true ) ? 'checked="checked"' : '';
 
 			foreach ( $taxonomy->object_type as $object_type ) {
 				$cpts[] = get_post_type_object( $object_type );
@@ -221,6 +221,7 @@ if ( ! class_exists( 'WP_No_Taxonomy_Base' ) ) {
 				esc_html( $active ),
 				esc_html( $id ),
 				sprintf(
+					/* translators: %s: taxonomy slug */
 					esc_html__( 'Activate to remove Slug %1$s from Post Type(s) %2$s', 'wp-no-taxonomy-base' ),
 					'<code><b>' . esc_html( $taxonomy->rewrite['slug'] ) . '</b></code>',
 					'<i>' . esc_html( $cpt_names ) . '</i>'
