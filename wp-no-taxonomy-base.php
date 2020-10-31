@@ -30,7 +30,7 @@ Domain Path: /languages
 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-//avoid direct calls to this file
+// avoid direct calls to this file
 if ( ! function_exists( 'add_filter' ) ) {
 	header( 'Status: 403 Forbidden' );
 	header( 'HTTP/1.1 403 Forbidden' );
@@ -42,7 +42,7 @@ if ( ! class_exists( 'WP_No_Taxonomy_Base' ) ) {
 	class WP_No_Taxonomy_Base {
 
 		public function __construct() {
-			add_filter( 'template_redirect', array( $this, 'redirect' ) );
+			add_action( 'template_redirect', array( $this, 'redirect' ) );
 			add_filter( 'term_link', array( $this, 'correct_term_link' ), 10, 3 );
 
 			add_action( 'admin_init', array( $this, 'settings_init' ) );
@@ -182,14 +182,14 @@ if ( ! class_exists( 'WP_No_Taxonomy_Base' ) ) {
 
 		public function settings_save( $screen ) {
 			if ( 'options-permalink' == $screen->base && isset( $_POST['wp-no-taxonomy-base-nonce'] ) ) {
-				if ( wp_verify_nonce( $_POST['wp-no-taxonomy-base-nonce'], 'wp-no-taxonomy-base-update-taxonomies' ) ) {
-					update_option( 'WP_No_Taxonomy_Base', ( isset( $_POST['WP_No_Taxonomy_Base'] ) ) ? $_POST['WP_No_Taxonomy_Base'] : array() );
+				if ( wp_verify_nonce( sanitize_text_field( $_POST['wp-no-taxonomy-base-nonce'] ), 'wp-no-taxonomy-base-update-taxonomies' ) ) {
+					update_option( 'WP_No_Taxonomy_Base', ( isset( $_POST['WP_No_Taxonomy_Base'] ) ) ? sanitize_text_field( $_POST['WP_No_Taxonomy_Base'] ) : array() );
 				}
 			}
 		}
 
 		public function show_description() {
-			echo '<p>' . __( 'You can remove the base from all registered taxonomies. Just select the taxonomies to remove their respective bases from your permalinks.', 'wp-no-taxonomy-base' ) . '</p>';
+			echo '<p>' . esc_html__( 'You can remove the base from all registered taxonomies. Just select the taxonomies to remove their respective bases from your permalinks.', 'wp-no-taxonomy-base' ) . '</p>';
 			wp_nonce_field( 'wp-no-taxonomy-base-update-taxonomies', 'wp-no-taxonomy-base-nonce' );
 		}
 
@@ -213,12 +213,18 @@ if ( ! class_exists( 'WP_No_Taxonomy_Base' ) ) {
 
 			printf(
 				'
-					<input type="checkbox" id="' . $id . '" name="WP_No_Taxonomy_Base[]" value="%s" %s />
-					<label for="' . $id . '"> %s </label>
+					<input type="checkbox" id="%s" name="WP_No_Taxonomy_Base[]" value="%s" %s />
+					<label for="%s"> %s </label>
 				',
-				$taxonomy->name,
-				$active,
-				sprintf( __( 'Activate to remove Slug %s from Post Type(s) %s', 'wp-no-taxonomy-base' ), '<code><b>' . $taxonomy->rewrite['slug'] . '</b></code>', '<i>' . $cpt_names . '</i>' )
+				esc_html( $id ),
+				esc_html( $taxonomy->name ),
+				esc_html( $active ),
+				esc_html( $id ),
+				sprintf(
+					esc_html__( 'Activate to remove Slug %1$s from Post Type(s) %2$s', 'wp-no-taxonomy-base' ),
+					'<code><b>' . esc_html( $taxonomy->rewrite['slug'] ) . '</b></code>',
+					'<i>' . esc_html( $cpt_names ) . '</i>'
+				)
 			);
 
 		}
