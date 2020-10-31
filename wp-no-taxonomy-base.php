@@ -30,7 +30,7 @@ Domain Path: /languages
 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-// avoid direct calls to this file
+// avoid direct calls to this file.
 if ( ! function_exists( 'add_filter' ) ) {
 	header( 'Status: 403 Forbidden' );
 	header( 'HTTP/1.1 403 Forbidden' );
@@ -128,14 +128,14 @@ if ( ! class_exists( 'WP_No_Taxonomy_Base' ) ) {
 
 				global $sitepress;
 
-				// remove WPML term filters
+				// remove WPML term filters.
 				remove_filter( 'get_terms_args', array( $sitepress, 'get_terms_args_filter' ) );
 				remove_filter( 'get_term', array( $sitepress, 'get_term_adjust_id' ) );
 				remove_filter( 'terms_clauses', array( $sitepress, 'terms_clauses' ) );
 
 				$categories = get_terms( $taxonomy, $args );
 
-				// restore WPML term filters
+				// restore WPML term filters.
 				add_filter( 'terms_clauses', array( $sitepress, 'terms_clauses' ), 10, 3 );
 				add_filter( 'get_term', array( $sitepress, 'get_term_adjust_id' ) );
 				add_filter( 'get_terms_args', array( $sitepress, 'get_terms_args_filter' ), 10, 2 );
@@ -170,11 +170,11 @@ if ( ! class_exists( 'WP_No_Taxonomy_Base' ) ) {
 
 			foreach ( $taxonomies as $taxonomy ) {
 				add_settings_field(
-					'wp-no-taxonomy-base-settings-' . $taxonomy->name, // id
+					'wp-no-taxonomy-base-settings-' . $taxonomy->name, // id.
 					$taxonomy->label,
-					array( $this, 'show_page' ), // display callback
-					'permalink', // settings page
-					'wp-no-taxonomy-base-settings', // settings section
+					array( $this, 'show_page' ), // display callback.
+					'permalink', // settings page.
+					'wp-no-taxonomy-base-settings', // settings section.
 					array( 'taxonomy' => $taxonomy )
 				);
 			}
@@ -230,8 +230,8 @@ if ( ! class_exists( 'WP_No_Taxonomy_Base' ) ) {
 
 		}
 
-	} // END class WP_No_Taxonomy_Base
+	}
 
 	$wp_no_taxonomy_base = new WP_No_Taxonomy_Base();
 
-} // END if class_exists
+}
